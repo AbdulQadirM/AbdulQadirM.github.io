@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f3f4f6" />
+    <script>
+      // Apply a saved theme before first paint (no flash). No saved choice → light.
+      try {
+        var t = localStorage.getItem('aq-theme-v2')
+        if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-aq-theme', t)
+      } catch (e) {}
+    </script>
+    <title>Abdul Qadir — AI & Backend Engineer</title>
+    <meta name="description" content="Abdul Qadir builds agentic AI systems, RAG pipelines, and the backend infrastructure that keeps them reliable in production." />
+    <meta property="og:title" content="Abdul Qadir — AI & Backend Engineer" />
+    <meta property="og:description" content="Agentic AI systems, RAG pipelines, and production backends." />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+    <noscript>This portfolio needs JavaScript. Reach me at abdulqadirrmagssii@gmail.com.</noscript>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

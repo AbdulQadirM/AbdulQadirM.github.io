@@ -1,0 +1,11 @@
+html,
+body {
+  margin: 0;
+  height: 100%;
+  background: #05070a;
+  overflow: hidden; /* the Kage page scrolls inside its own frame */
+}
+.shader-frame {
+  position: fixed;
+  inset: 0;
+}

@@ -1,0 +1,188 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-ink: #07080b;
+  --color-ink-2: #0d0f14;
+  --color-ink-3: #14171e;
+  --color-line: rgb(255 255 255 / 0.08);
+  --color-line-strong: rgb(255 255 255 / 0.16);
+  --color-fg: #eef0f3;
+  --color-muted: #9aa1ad;
+  --color-dim: #626a78;
+  --color-accent: #f2b441;
+  --color-on-accent: #07080b;
+  --color-coral: #ff7a59;
+  --color-iris: #8b9cff;
+
+  --font-display: 'Bricolage Grotesque Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Geist Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-on-accent);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  /* Custom cursor: hide the native one only when our cursor is active. */
+  html.has-custom-cursor,
+  html.has-custom-cursor * {
+    cursor: none !important;
+  }
+  html.has-custom-cursor input,
+  html.has-custom-cursor textarea {
+    cursor: text !important;
+  }
+}
+
+/* ───────── Themes ─────────
+   Light is the default for every visitor. Dark applies only when chosen with the
+   nav toggle, which writes data-aq-theme="dark" on <html> (and remembers it).
+   Our own attribute on purpose: hosts such as embed viewers stamp their own data-theme,
+   which must not flip this site to dark.
+   Tailwind utilities read these same variables, so every component follows. */
+:root {
+  --color-ink: #f3f4f6;
+  --color-ink-2: #ffffff;
+  --color-ink-3: #e8eaef;
+  --color-line: rgb(12 14 20 / 0.09);
+  --color-line-strong: rgb(12 14 20 / 0.18);
+  --color-fg: #0c0e14;
+  --color-muted: #4a515e;
+  --color-dim: #767d8b;
+  --color-accent: #a8680a;
+  --color-on-accent: #fffaf0;
+  --color-coral: #cf4a26;
+  --color-iris: #4d5bd1;
+  color-scheme: light;
+}
+/* Dark palette for an explicit choice, and for .dark-scope islands
+   (product mockups and the hero card stay dark "screens" in both themes). */
+:root[data-aq-theme='dark'],
+.dark-scope {
+  --color-ink: #07080b;
+  --color-ink-2: #0d0f14;
+  --color-ink-3: #14171e;
+  --color-line: rgb(255 255 255 / 0.08);
+  --color-line-strong: rgb(255 255 255 / 0.16);
+  --color-fg: #eef0f3;
+  --color-muted: #9aa1ad;
+  --color-dim: #626a78;
+  --color-accent: #f2b441;
+  --color-on-accent: #07080b;
+  --color-coral: #ff7a59;
+  --color-iris: #8b9cff;
+  color-scheme: dark;
+}
+.dark-scope {
+  color: var(--color-fg);
+}
+
+/* Custom cursor colours: a solid mark plus a thin halo in the opposite tone,
+   so it stays visible on light pages, dark pages, and the dark cards in between. */
+:root {
+  --cursor-mark: #0c0e14;
+  --cursor-halo: rgb(255 255 255 / 0.85);
+}
+:root[data-aq-theme='dark'] {
+  --cursor-mark: #eef0f3;
+  --cursor-halo: rgb(0 0 0 / 0.6);
+}
+
+/* Kept outside @layer on purpose: unlayered rules win over any host/browser reset. */
+html {
+  background: var(--color-ink);
+  color: var(--color-fg);
+  transition: background-color 0.4s ease;
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  color: var(--color-fg);
+  background: var(--color-ink);
+  overflow-x: clip;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* Lenis smooth-scroll helpers */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+
+@layer utilities {
+  .grain {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 60;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+  .hairline {
+    background: linear-gradient(90deg, transparent, var(--color-line-strong), transparent);
+    height: 1px;
+  }
+  .flow-dash {
+    stroke-dasharray: 4 6;
+    animation: flow 1.6s linear infinite;
+  }
+  .float-slow {
+    animation: floaty 9s ease-in-out infinite;
+  }
+  .spin-slow {
+    animation: spin 40s linear infinite;
+  }
+}
+
+@keyframes flow {
+  to {
+    stroke-dashoffset: -20;
+  }
+}
+@keyframes floaty {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(0, -14px, 0) rotate(4deg);
+  }
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
